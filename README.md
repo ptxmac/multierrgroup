@@ -2,6 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/go.ptx.dk/multierrgroup.svg)](https://pkg.go.dev/go.ptx.dk/multierrgroup)
 [![Github Workflow](https://github.com/ptxmac/multierrgroup/actions/workflows/go.yml/badge.svg)](https://github.com/ptxmac/multierrgroup/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/ptxmac/multierrgroup/branch/master/graph/badge.svg)](https://codecov.io/gh/ptxmac/multierrgroup)
 
 A simple combination of [golang.org/x/sync/errgroup](https://pkg.go.dev/golang.org/x/sync/errgroup) and
 [go.uber.org/multierr](https://pkg.go.dev/go.uber.org/multierr).
