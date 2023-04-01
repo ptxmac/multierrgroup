@@ -12,6 +12,8 @@ _except_ that it captures _all_ errors returned from the goroutines instead of j
 
 ## Usage
 
+`import "go.ptx.dk/multierrgroup"`
+
 `multierrgroup` is a drop-in replacement for `errgroup` and have the same methods and behaviour.
 
 When any goroutine returns an error, it will colleceted using `multierr.Append` and `Wait` will return the multierr.
