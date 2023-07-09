@@ -1,0 +1,43 @@
+name: Outdated Dependencies
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  go-mod-outdated:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.20
+      - name: Install go-mod-outdated
+        run: go install github.com/psampaz/go-mod-outdated@v0.8.0
+      - name: Check outdated modules
+        id: modout
+        run: |
+          go list -u -m -json all | go-mod-outdated -update -direct -style markdown -ci > mod.md
+        continue-on-error: true
+
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request' && steps.modout.outcome == 'failure'
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs')
+            const table =  fs.readFileSync('mod.md', 'utf8')
+            const output = `Outdated modules \n${table}`
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+
+
